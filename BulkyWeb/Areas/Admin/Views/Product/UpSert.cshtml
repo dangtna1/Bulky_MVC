@@ -1,0 +1,113 @@
+﻿@model ProductVM
+
+<form method="post" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <div class="form-floating py-2 col-12">
+            <h2 class="text-primary text-center">@(Model.Product.Id == 0 ? "Create" : "Update") Product</h2>
+            <hr />
+        </div>
+@*         <div asp-validation-summary="All"></div> *@
+
+        <div class="row">
+            <div class="col-10">
+                <input type="text" class="form-control" asp-for="Product.Id" hidden />
+                <input type="text" class="form-control" asp-for="Product.ImageUrl" hidden />
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.Title"></label>
+                    <input type="text" class="form-control" asp-for="Product.Title" />
+                    <span asp-validation-for="Product.Title" class="text-danger"></span>
+                </div>
+                <div class="py-2 col-12">
+                    <label class="p-0" asp-for="Product.Description"></label>
+                    <textarea type="text" class="form-control" asp-for="Product.Description"> </textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.ISBN"></label>
+                    <input type="text" class="form-control" asp-for="Product.ISBN" />
+                    <span asp-validation-for="Product.ISBN" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.Author"></label>
+                    <input type="text" class="form-control" asp-for="Product.Author" />
+                    <span asp-validation-for="Product.Author" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.ListPrice"></label>
+                    <input type="text" class="form-control" asp-for="Product.ListPrice" />
+                    <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.Price"></label>
+                    <input type="text" class="form-control" asp-for="Product.Price" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.Price50"></label>
+                    <input type="text" class="form-control" asp-for="Product.Price50" />
+                    <span asp-validation-for="Product.Price50" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.Price100"></label>
+                    <input type="text" class="form-control" asp-for="Product.Price100" />
+                    <span asp-validation-for="Product.Price100" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label class="p-0" asp-for="Product.ImageUrl"></label>
+                    <input type="file" name="file" class="form-control" asp-for="Product.ImageUrl" />
+                    @* <span asp-validation-for="Product.ImageUrl" class="text-danger"></span> *@
+                </div>
+            </div>
+            <div class="col-2">
+                <img src="@Model.Product.ImageUrl" alt="Image" width="100%"
+                     style="border-radius:5px; border:1px solid #bbb9b9" />
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                @if (Model.Product.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                }
+
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary border  form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@* client side rendering *@
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}
