@@ -9,18 +9,53 @@ namespace BulkyWeb.DataAccess
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> applicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Action", DisplayOrder = 1 }, 
+                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+                );
+
+            modelBuilder.Entity<Company>().HasData(
+                     new Company
+                     {
+                         Id = 1,
+                         City = "Tech City",
+                         Name = "Tech Solution",
+                         PhoneNumber = "6669990000",
+                         PostalCode = "12121",
+                         State = "IL",
+                         StreetAddress = "123 Tech St"
+                     },
+                     new Company
+                     {
+                         Id = 2,
+                         City = "Vid City",
+                         Name = "Vivid Books",
+                         PhoneNumber = "7779990000",
+                         PostalCode = "66666",
+                         State = "IL",
+                         StreetAddress = "999 Vid St"
+                     },
+                     new Company
+                     {
+                         Id = 3,
+                         City = "Lala land",
+                         Name = "Readers Club",
+                         PhoneNumber = "1113335555",
+                         PostalCode = "99999",
+                         State = "NY",
+                         StreetAddress = "999 Main St"
+                     }
                 );
 
             modelBuilder.Entity<Product>().HasData(
